@@ -95,7 +95,7 @@ from skimage.feature import graycomatrix, graycoprops
 
 def rescale(img):
     from sklearn.preprocessing import MinMaxScaler
-    scaler = MinMaxScaler(feature_range=(10,100))
+    scaler = MinMaxScaler(feature_range=(0,1))
     scaler.fit(img)
     scaler.transform(img)
     return img
