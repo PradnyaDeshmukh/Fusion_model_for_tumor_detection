@@ -92,7 +92,18 @@ for i in dataset_dir4:
 print(labels)
 from skimage.feature import graycomatrix, graycoprops
 
-def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2],lvl=256,sym=True,norm=True):
+
+def rescale(img):
+    from sklearn.preprocessing import MinMaxScaler
+    scaler = MinMaxScaler(feature_range=(10,100))
+    scaler.fit(img)
+    scaler.transform(img)
+    return img
+
+
+
+def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2,2*np.pi/3],lvl=256,sym=True,norm=True):
+    img = rescale(img)
     glcm = graycomatrix(img,distances=dists,angles=angls,levels=lvl,symmetric=sym,normed=norm)
 
     featture = []
@@ -111,7 +122,7 @@ for img,label in zip(imgs,labels):
     glcm_all_angls.append(calculate_GLCM(img,label,props=properties))
 
 columns = []
-angles = ['0','45','90']
+angles = ['0','45','90','135']
 for name in properties :
     for ang in angles:
         columns.append(name + "_" + ang)
