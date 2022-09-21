@@ -29,6 +29,7 @@ for i in dataset_dir1:
     ymin,ymax,xmin,xmax = h//3,h*2//3,w//3,w*2//3
     crop = gray_img[ymin:ymax,xmin:xmax]
     resized = cv2.resize(crop,(0,0),fx=0.5,fy=0.5)
+    cv2.imwrite(f'GrayScale/{i}.jpg', resized)
     imgs.append(resized)
     labels.append(normalize_label(i))
     print(normalize_label(i))
@@ -102,7 +103,7 @@ def rescale(img):
 
 
 
-def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2,2*np.pi/3],lvl=256,sym=True,norm=True):
+def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2,3*np.pi/4],lvl=256,sym=True,norm=True):
     img = rescale(img)
     glcm = graycomatrix(img,distances=dists,angles=angls,levels=lvl,symmetric=sym,normed=norm)
 
@@ -134,5 +135,4 @@ import pandas as pd
 glcm_df = pd.DataFrame(glcm_all_angls,columns=columns)
 glcm_df.to_csv("trainSet.csv")
 # print(glcm_df.head(20))
-
 

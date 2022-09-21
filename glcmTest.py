@@ -101,7 +101,7 @@ def rescale(img):
     return img
 
 
-def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2,2*np.pi/3],lvl=256,sym=True,norm=True):
+def calculate_GLCM(img,label,props,dists=[5],angls=[0,np.pi/4,np.pi/2,3*np.pi/4],lvl=256,sym=True,norm=True):
     img = rescale(img)
     glcm = graycomatrix(img,distances=dists,angles=angls,levels=lvl,symmetric=sym,normed=norm)
     # print(glcm)
