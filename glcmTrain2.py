@@ -3,16 +3,13 @@ import numpy as np
 import cv2
 import os
 import re
-from conf import TEST_DIR
+from conf import DATA_DIR
 from skimage.color import rgb2gray
 from skimage.feature import graycomatrix, graycoprops
-
 bins32 = np.array([0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160,
             168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 255]) #32-bit
 
 # bins32 = np.array([0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 255]) #32-bit
- #32-bit
-
 # deal with labels
 def normalize_label(str_): 
     str_ = str_.replace(" ","") #replace all spaces in label
@@ -25,7 +22,7 @@ def normalize_label(str_):
 imgs = [] #list image matrix
 labels = []
 descs = []
-dataset_dir1 = os.listdir(os.path.join(TEST_DIR,"glioma"))
+dataset_dir1 = os.listdir(os.path.join(DATA_DIR,"glioma"))
 
 def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity','contrast','ASM','energy']):
     img = cv2.imread(img_path)
@@ -39,20 +36,7 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     
 
     featture = []
-    # dissimilarity = dissimilarity_feature(matrix_coocurrence)
-    # featture.append(dissimilarity)
-    # # correlation = correlation_feature(matrix_coocurrence)
-    # # featture.append(correlation)
-    # homogeneity = homogeneity_feature(matrix_coocurrence)
-    # featture.append(homogeneity)
-    # contrast = contrast_feature(matrix_coocurrence)
-    # featture.append(contrast)
-    # ASM = asm_feature(matrix_coocurrence)
-    # featture.append(matrix_coocurrence)
-    # energy = energy_feature(matrix_coocurrence)
-    # featture.append(energy)
-    # featture.append(normalize_label(i))
-    # print(normalize_label(i))
+    
     glcm_props = [propery for name in props for propery in graycoprops(matrix_coocurrence, name)[0]]
     for item in glcm_props:
         featture.append(item)
@@ -65,35 +49,30 @@ glcm_all_angls = []
 
 for i in dataset_dir1:
     print(i)
-    img_path = os.path.join(os.path.join(TEST_DIR,"glioma"),i)
+    img_path = os.path.join(os.path.join(DATA_DIR,"glioma"),i)
     glcm_all_angls.append(GLCM_Calculate(img_path,i))
     # print(img_path)
 
 
-
-
-dataset_dir2 = os.listdir(os.path.join(TEST_DIR,"meningioma"))
+dataset_dir2 = os.listdir(os.path.join(DATA_DIR,"meningioma"))
 for i in dataset_dir2:
     print(i)
-    img_path = os.path.join(os.path.join(TEST_DIR,"meningioma"),i)
+    img_path = os.path.join(os.path.join(DATA_DIR,"meningioma"),i)
     glcm_all_angls.append(GLCM_Calculate(img_path,i))
 
-    # print(img_path)
 
-
-dataset_dir3 = os.listdir(os.path.join(TEST_DIR,"pituitary"))
+dataset_dir3 = os.listdir(os.path.join(DATA_DIR,"pituitary"))
 for i in dataset_dir3:
     print(i)
-    img_path = os.path.join(os.path.join(TEST_DIR,"pituitary"),i)
+    img_path = os.path.join(os.path.join(DATA_DIR,"pituitary"),i)
     glcm_all_angls.append(GLCM_Calculate(img_path,i))
 
 
-dataset_dir4 = os.listdir(os.path.join(TEST_DIR,"notumor"))
+dataset_dir4 = os.listdir(os.path.join(DATA_DIR,"notumor"))
 for i in dataset_dir4:
     print(i)
-    img_path = os.path.join(os.path.join(TEST_DIR,"notumor"),i)
+    img_path = os.path.join(os.path.join(DATA_DIR,"notumor"),i)
     glcm_all_angls.append(GLCM_Calculate(img_path,i))
-
 
 properties = ['dissimilarity','correlation','homogeneity','contrast','ASM','energy']
 
@@ -108,7 +87,7 @@ columns.append("label")
 import pandas as pd
 
 glcm_df = pd.DataFrame(glcm_all_angls,columns=columns)
-glcm_df.to_csv("testSet.csv")
+glcm_df.to_csv("trainSet.csv")
 
 
 # print(GLCM_Calculate(os.path.join(os.path.join(TEST_DIR,"glioma"),'Tr-gl_0010.jpg')))

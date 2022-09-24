@@ -14,7 +14,7 @@ X = df.drop(labels=["label"], axis=1)
 from sklearn.ensemble import RandomForestClassifier
 
 # model = LinearSVC(max_iter= 40000)
-model = RandomForestClassifier(n_estimators = 20, random_state = 42)
+model = RandomForestClassifier(n_estimators = 10000, random_state = 42)
 model.fit(X,Y)
 
 df_test = pd.read_csv("testSet.csv")
