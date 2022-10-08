@@ -1,7 +1,7 @@
 from cProfile import label
 import pandas as pd
 
-df = pd.read_csv("trainSet.csv")
+df = pd.read_csv("trainSetAngleAvg.csv")
 
 Y = df["label"].values
 
@@ -14,7 +14,7 @@ X = df.drop(labels=["label"], axis=1)
 from sklearn.ensemble import RandomForestClassifier
 
 # model = LinearSVC(max_iter= 40000)
-model = RandomForestClassifier(n_estimators = 15, max_depth=3)
+model = RandomForestClassifier(n_estimators = 1, max_depth=1)
 model.fit(X,Y)
 
 # rfc = RandomForestClassifier()
@@ -46,7 +46,7 @@ model.fit(X,Y)
 
 
 
-df_test = pd.read_csv("testSet.csv")
+df_test = pd.read_csv("testSetAngleAvg.csv")
 
 y_test = df_test["label"].values
 y_test = LabelEncoder().fit_transform(y_test)
