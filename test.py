@@ -18,7 +18,6 @@ cv2.imshow('red_img', img)
 cv2.waitKey()
 print(img.shape)
 
-cv2.imshow('red_img',img)
 image32 = rgb2gray(img)
 cv2.imshow('gray',image32)
 cv2.waitKey()
