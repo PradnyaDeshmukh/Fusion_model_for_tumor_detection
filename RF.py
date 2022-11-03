@@ -1,20 +1,23 @@
 from cProfile import label
 import pandas as pd
 
-df = pd.read_csv("trainSetAngleAvg.csv")
+df3 = pd.read_csv("trainRGB.csv")
 
-Y = df["label"].values
+# df3.columns.str.match("Unnamed")
+# df3.loc[:,~df3.columns.str.match("Unnamed")]
+# print(df3.head())
+Y = df3["label"].values
 
 from sklearn.preprocessing import LabelEncoder
 Y = LabelEncoder().fit_transform(Y)
 
-X = df.drop(labels=["label"], axis=1)
+X = df3.drop(labels=["label"], axis=1)
 
 # from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 
 # model = LinearSVC(max_iter= 40000)
-model = RandomForestClassifier(n_estimators = 1, max_depth=1)
+model = RandomForestClassifier(n_estimators = 12, max_depth=15)
 model.fit(X,Y)
 
 # rfc = RandomForestClassifier()
@@ -46,8 +49,11 @@ model.fit(X,Y)
 
 
 
-df_test = pd.read_csv("testSetAngleAvg.csv")
+df_test = pd.read_csv("testRGB.csv")
+# print(df_test.head())
 
+# df_test.columns.str.match("Unnamed")
+# df_test.loc[:,~df_test.columns.str.match("Unnamed")]
 y_test = df_test["label"].values
 y_test = LabelEncoder().fit_transform(y_test)
 
