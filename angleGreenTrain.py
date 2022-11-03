@@ -96,4 +96,4 @@ columns.append("label")
 import pandas as pd
 
 glcm_df = pd.DataFrame(glcm_all_angls,columns=columns)
-glcm_df.to_csv("trainSet.csv")
+glcm_df.to_csv("GreentrainSet.csv")
