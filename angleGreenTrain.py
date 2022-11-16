@@ -35,21 +35,23 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     inds = np.digitize(image, bins32)
 
     # max_value = inds.max()+1
-    matrix_coocurrence = graycomatrix(inds, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=256, normed=True, symmetric=True)
+    matrix_coocurrence = graycomatrix(inds, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=128, normed=True, symmetric=True)
     
 
     featture = []
     
     glcm_props = [propery for name in props for propery in graycoprops(matrix_coocurrence, name)[0]]
     
-    for m in range(0,4):
+    
+    for m in range(0,len(glcm_props),4):
         j = m
         avg = 0
-        while(j<len(glcm_props)):
+        while(j<m+4):
             avg+=glcm_props[j]
-            j+=4
+            j+=1
         avg/=4
         featture.append(avg)
+
 
     featture.append(normalize_label(i))
     return featture
@@ -88,7 +90,7 @@ properties = ['dissimilarity','correlation','homogeneity','contrast','ASM','ener
 
 columns = []
 angles = ['0','45','90','135']
-for name in angles :
+for name in properties :
         columns.append(name)
         
 columns.append("label")

@@ -13,11 +13,11 @@ Y = LabelEncoder().fit_transform(Y)
 
 X = df3.drop(labels=["label"], axis=1)
 
-# from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 
 # model = LinearSVC(max_iter= 40000)
-model = RandomForestClassifier(n_estimators = 12, max_depth=15)
+model = RandomForestClassifier()
 model.fit(X,Y)
 
 # rfc = RandomForestClassifier()
