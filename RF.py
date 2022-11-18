@@ -1,7 +1,7 @@
 from cProfile import label
 import pandas as pd
 
-df3 = pd.read_csv("trainRGB.csv")
+df3 = pd.read_csv("RedtrainSet0.csv")
 
 # df3.columns.str.match("Unnamed")
 # df3.loc[:,~df3.columns.str.match("Unnamed")]
@@ -49,7 +49,7 @@ model.fit(X,Y)
 
 
 
-df_test = pd.read_csv("testRGB.csv")
+df_test = pd.read_csv("RedtestSet0.csv")
 # print(df_test.head())
 
 # df_test.columns.str.match("Unnamed")
