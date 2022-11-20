@@ -35,7 +35,7 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     inds = np.digitize(image, bins32)
 
     # max_value = inds.max()+1
-    matrix_coocurrence = graycomatrix(inds, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=256, normed=True, symmetric=True)
+    matrix_coocurrence = graycomatrix(inds, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=64, normed=True, symmetric=True)
     
 
     featture = []
