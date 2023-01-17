@@ -25,8 +25,7 @@ dataset_dir1 = os.listdir(os.path.join(DATA_DIR,"glioma"))
 
 def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity','contrast','ASM','energy']):
     img = cv2.imread(img_path)
-    img[:,:,2] = 0 #blue
-    img[:,:,1] = 0 #blue
+    img[:,:,2] = 0
     # cv2.imshow('red_img',img)
     # image32 = rgb2gray(img)
     image32 = img.reshape(img.shape[0],img.shape[1]*img.shape[2])
@@ -36,7 +35,7 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     inds = np.digitize(image, bins32)
 
     # max_value = inds.max()+1
-    matrix_coocurrence = graycomatrix(inds, [1], [0], levels=64, normed=True, symmetric=True)
+    matrix_coocurrence = graycomatrix(inds, [1], [3*np.pi/4], levels=256, normed=True, symmetric=True)
     
 
     featture = []
@@ -44,8 +43,10 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     glcm_props = [propery for name in props for propery in graycoprops(matrix_coocurrence, name)[0]]
     
     
+    
     for item in glcm_props:
         featture.append(item)
+
 
     featture.append(normalize_label(i))
     return featture
@@ -92,4 +93,4 @@ columns.append("label")
 import pandas as pd
 
 glcm_df = pd.DataFrame(glcm_all_angls,columns=columns)
-glcm_df.to_csv("BluetrainSet0.csv")
+glcm_df.to_csv("GreentrainSet135.csv")

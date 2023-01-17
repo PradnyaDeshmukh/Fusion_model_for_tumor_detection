@@ -39,16 +39,21 @@ def GLCM_Calculate(img_path,i,props=['dissimilarity','correlation','homogeneity'
     inds = np.digitize(image, bins32)
 
     # max_value = inds.max()+1
-    matrix_coocurrence = graycomatrix(inds, [1], [0], levels=64, normed=True, symmetric=True)
+    matrix_coocurrence = graycomatrix(inds, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=256, normed=True, symmetric=True)
     
 
     featture = []
     
     glcm_props = [propery for name in props for propery in graycoprops(matrix_coocurrence, name)[0]]
     
-    
-    for item in glcm_props:
-        featture.append(item)
+    for m in range(0,len(glcm_props),4):
+        j = m
+        avg = 0
+        while(j<m+4):
+            avg+=glcm_props[j]
+            j+=1
+        avg/=4
+        featture.append(avg)
 
 
     featture.append(normalize_label(i))
@@ -102,5 +107,5 @@ columns.append("label")
 import pandas as pd
 
 glcm_df = pd.DataFrame(glcm_all_angls,columns=columns)
-glcm_df.to_csv("GreentestSet0.csv")
+glcm_df.to_csv("GreentestSet.csv")
 
