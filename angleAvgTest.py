@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import os
 import re
-from conf import TEST_DIR
+from ..conf import TEST_DIR
 from skimage.color import rgb2gray
 from skimage.feature import graycomatrix, graycoprops
 
